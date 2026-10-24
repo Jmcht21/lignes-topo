@@ -1,0 +1,9 @@
+# Fichiers de configuration sensibles et clés privées
+.env
+.env.local
+config.js
+
+# Fichiers temporaires et logs
+*.log
+scratch/
+test_*.png
