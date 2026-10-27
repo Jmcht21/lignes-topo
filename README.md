@@ -1,15 +1,16 @@
-# TopoPoster Studio HD — Moteur d'Isocontours Vectoriels & Cartographie IGN
+# topolines.tech — Moteur d'Isocontours Vectoriels & Cartographie d'Art
 
 Application web monopage 100 % client (HTML5 / CSS3 moderne / JavaScript vanilla) permettant d'explorer une carte, de sélectionner précisément une zone géographique à l'aide d'un cadre de visée interactif et d'en exporter un poster topographique haute résolution :
-- **Véritable calcul mathématique des courbes de niveau** (*Marching Squares* sur MNT / DEM réel).
-- **Vrai rendu toponymique vectoriel dans le thème** :
-  - **Villes & Communes (Studio)** : uniquement les villes et villages, sans parcs, sans limites administratives, avec typographie d'art vectorielle harmonisée avec la palette de l'affiche.
-  - **Sommets & Pics réels (▲)** : recherche toponymique des vrais noms (Mont Aiguille, Grand Veymont, Barre des Écrins...) couplée à l'altitude exacte en mètres, éliminant tout libellé générique.
-  - **Graduations d'altitude des lignes** : étiquetage cartographique orienté le long des courbes maîtresses avec masque de découpe (*knockout*) dans la couleur de fond de l'affiche.
-- **Exportation en SVG Vectoriel pur**, **PDF Haute Définition** et **PNG jusqu'à 50 Mégapixels**.
-- **Contrôle précis des calques** : courbes maîtresses, réseau routier, toponymie, ombrage 3D, cartouche d'art.
-- **Mode « Lignes Topo Pures »** : exporte uniquement les courbes vectorielles sans aucun texte ni route (fond émeraude, noir, blanc ou transparent), reproduisant fidèlement l'affiche d'art de référence.
-- **Mode Dalles Raster IGN** : assemblage classique des flux officiels IGN Géoplateforme (Plan v2, Orthophoto, Pentes de montagne).
+- **Architecture en 2 étapes fluides** : Cadrage géographique sur carte Leaflet ➔ Page Studio plein écran de personnalisation en direct (couleurs directes, épaisseurs, calques, typographies) sans recalcul lourd du MNT.
+- **Véritable calcul mathématique des courbes de niveau** (*Marching Squares* sur MNT / DEM mondial).
+- **Curseur de lissage et d'arrondi poussé jusqu'au Niveau 8** (relaxation laplacienne + algorithme de Chaikin pour des vagues et courbes ultra-organiques).
+- **Curseur de filtrage des micro-points résiduels (0 à 40 px)** pour éliminer les moindres artefacts et îlots isolés indésirables.
+- **Format de prise custom / personnalisé** : définition libre de dimensions (ex: 50×70 cm, 40×50 cm, 16:9, 4:5...) adaptant le cadre de visée et les résolutions d'export.
+- **12 Typographies prestigieuses intégrées** : Montserrat, Inter, Syne, Cormorant Garamond, Plus Jakarta Sans, Playfair Display, Bodoni Moda, Cinzel, Marcellus, Space Grotesk, Oswald, DM Mono.
+- **Espacement régulier des lettres corrigé** (notamment pour les "I" et caractères étroits).
+- **Export SVG vectoriel pur corrigé et complet** (courbes maîtresses, courbes secondaires, graduations d'altitude, sommets réels ▲, villes, échelle graphique et flèche du Nord).
+- **Export PNG jusqu'à 50 Mégapixels et PDF Haute Résolution**.
+- **Interface minimaliste, élégante et professionnelle** sans dégradés tape-à-l'œil, avec boutons de couleurs standards et transitions fluides.
 
 ---
 

@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TopoPoster Studio Pro — Créateur d'Affiches Topographiques & Moteur Vectoriel</title>
+    <title>topolines.tech — Studio de Cartographie & Isocontours Vectoriels</title>
 
-    <!-- Google Fonts : Inter, Montserrat, Cinzel, Playfair Display, Space Grotesk -->
+    <!-- Google Fonts : 12 Typographies de prestige -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700;800&family=Marcellus&family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -24,449 +24,736 @@
 </head>
 <body>
 
-    <!-- Carte Leaflet Plein Écran -->
-    <div id="map"></div>
+    <!-- =====================================================================
+         VUE 1 : CADRAGE & EXPLORATION CARTE
+         ===================================================================== -->
+    <div id="view-map" class="screen-view">
+        <!-- Carte Leaflet Plein Écran -->
+        <div id="map"></div>
 
-    <!-- Barre Flottante de Navigation du Fond de Carte (Haut-Droite) -->
-    <div id="map-nav-toolbar" title="Changer le fond de carte pour explorer la zone">
-        <button class="map-nav-btn active" data-nav-layer="openTopo">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 22 22 22"/></svg>
-            <span>Relief Topo</span>
-        </button>
-        <button class="map-nav-btn" data-nav-layer="ignPlan">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-            <span>Plan Standard</span>
-        </button>
-        <button class="map-nav-btn" data-nav-layer="ignOrtho">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-            <span>Vue Aérienne</span>
-        </button>
-        <button class="map-nav-btn" data-nav-layer="cartoDark">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            <span>Sombre Épuré</span>
-        </button>
-    </div>
+        <!-- Barre Flottante de Navigation du Fond de Carte (Haut-Droite) -->
+        <div id="map-nav-toolbar" title="Changer le fond de carte pour explorer la zone">
+            <button class="map-nav-btn active" data-nav-layer="openTopo">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 22 22 22"/></svg>
+                <span>Relief Topo</span>
+            </button>
+            <button class="map-nav-btn" data-nav-layer="ignPlan">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+                <span>Plan Standard</span>
+            </button>
+            <button class="map-nav-btn" data-nav-layer="ignOrtho">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                <span>Vue Aérienne</span>
+            </button>
+            <button class="map-nav-btn" data-nav-layer="cartoDark">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <span>Sombre Épuré</span>
+            </button>
+        </div>
 
-    <!-- Cadre de Recadrage & Visée Interactif -->
-    <div id="crop-overlay">
-        <div id="crop-frame">
-            <div class="corner-bracket corner-tl"></div>
-            <div class="corner-bracket corner-tr"></div>
-            <div class="corner-bracket corner-bl"></div>
-            <div class="corner-bracket corner-br"></div>
+        <!-- Cadre de Recadrage & Visée Interactif -->
+        <div id="crop-overlay">
+            <div id="crop-frame">
+                <div class="corner-bracket corner-tl"></div>
+                <div class="corner-bracket corner-tr"></div>
+                <div class="corner-bracket corner-bl"></div>
+                <div class="corner-bracket corner-br"></div>
 
-            <div class="crosshair-h"></div>
-            <div class="crosshair-v"></div>
+                <div class="crosshair-h"></div>
+                <div class="crosshair-v"></div>
 
-            <div class="frame-header-badge">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 22 22 22"/></svg>
-                <span id="frame-ratio-label">A4 Portrait (2480 × 3508 px)</span>
-            </div>
+                <div class="frame-header-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 22 22 22"/></svg>
+                    <span id="frame-ratio-label">A4 Portrait (2480 × 3508 px)</span>
+                </div>
 
-            <div id="live-cartouche-preview">
-                <div class="preview-title" id="preview-title-text">MASSIF DU VERCORS</div>
-                <div class="preview-subtitle" id="preview-subtitle-text">45.034° N, 5.512° E — ALPES FRANÇAISES</div>
-                <div class="preview-meta">
-                    <span id="preview-coords-text">45° 02' 02" N  •  05° 30' 43" E</span>
-                    <span id="preview-scale-text">ÉCHELLE ~ 1:50 000</span>
-                    <span>▲ N</span>
+                <div id="live-cartouche-preview">
+                    <div class="preview-title" id="preview-title-text">MASSIF DU VERCORS</div>
+                    <div class="preview-subtitle" id="preview-subtitle-text">45.034° N, 5.512° E — ALPES FRANÇAISES</div>
+                    <div class="preview-meta">
+                        <span id="preview-coords-text">45° 02' 02" N  •  05° 30' 43" E</span>
+                        <span id="preview-scale-text">ÉCHELLE ~ 1:50 000</span>
+                        <span>▲ N</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Bouton Rétractable pour la Barre Latérale -->
-    <button id="sidebar-toggle-btn" title="Afficher / Masquer le studio">
-        <svg id="toggle-icon-collapse" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-        <svg id="toggle-icon-expand" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-    </button>
+        <!-- Bouton Rétractable pour la Barre Latérale -->
+        <button id="sidebar-toggle-btn" title="Afficher / Masquer le studio">
+            <svg id="toggle-icon-collapse" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            <svg id="toggle-icon-expand" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
 
-    <!-- Panneau Latéral (Sidebar Studio) -->
-    <aside id="sidebar">
-        <div class="sidebar-header">
-            <div class="app-brand">
-                <div class="brand-identity">
-                    <div class="brand-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 22 22 22"/></svg>
+        <!-- Panneau Latéral (Sidebar Studio) -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <div class="app-brand">
+                    <div class="brand-identity">
+                        <div class="brand-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 22 22 22"/></svg>
+                        </div>
+                        <div class="brand-text">
+                            <h1>topolines.tech</h1>
+                            <span>Cartographie d'Art & Isocontours</span>
+                        </div>
                     </div>
-                    <div class="brand-text">
-                        <h1>TopoPoster Studio Pro</h1>
-                        <span>Cartographie d'Art & MNT Vectoriel</span>
-                    </div>
-                </div>
 
-                <div class="header-action-btns">
-                    <!-- Bascule Thème Clair / Sombre de l'Interface -->
-                    <button id="btn-theme-toggle" class="btn-icon-subtle" title="Basculer Thème Clair / Sombre">
-                        <svg id="theme-icon-dark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-                        <svg id="theme-icon-light" style="display:none;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                    </button>
-                    <!-- Bouton Configuration Clés API -->
-                    <button id="btn-open-api-modal" class="btn-icon-subtle" title="Clés d'API & Fournisseurs (Optionnel)">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Onglets de Mode Principal -->
-            <div class="mode-nav-tabs">
-                <button class="mode-tab-btn active" id="tab-btn-vector" data-mode="vector">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                    <span>1. Courbes Topo (DEM)</span>
-                </button>
-                <button class="mode-tab-btn" id="tab-btn-raster" data-mode="raster">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
-                    <span>2. Dalles IGN / Ortho</span>
-                </button>
-            </div>
-        </div>
-
-        <div class="sidebar-content">
-            <!-- 1. Recherche & Lieux Remarquables -->
-            <div class="config-section">
-                <div class="section-title">
-                    <span>Recherche & Lieux Notables</span>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-                </div>
-                
-                <div class="form-group">
-                    <div class="search-box">
-                        <input type="text" id="input-search" class="input-text" placeholder="Rechercher (ex: Chamonix, Vercors, Gavarnie...)">
-                        <button class="btn-search" id="btn-search" title="Lancer la recherche">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <div class="header-action-btns">
+                        <!-- Bascule Thème Clair / Sombre de l'Interface -->
+                        <button id="btn-theme-toggle" class="btn-icon-subtle" title="Basculer Thème Clair / Sombre">
+                            <svg id="theme-icon-dark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                            <svg id="theme-icon-light" style="display:none;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        </button>
+                        <!-- Bouton Configuration Clés API -->
+                        <button id="btn-open-api-modal" class="btn-icon-subtle" title="Clés d'API & Fournisseurs (Optionnel)">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
                         </button>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <select id="preset-places-select" class="select-control">
-                        <option value="">— Accès rapide spots remarquables —</option>
-                        <option value="vercors" selected>Massif du Vercors (Isère)</option>
-                        <option value="chamonix">Mont Blanc / Chamonix</option>
-                        <option value="gavarnie">Cirque de Gavarnie (Pyrénées)</option>
-                        <option value="calanques">Calanques de Marseille</option>
-                        <option value="verdon">Gorges du Verdon</option>
-                        <option value="puydedome">Puy de Dôme (Volcans d'Auvergne)</option>
-                        <option value="etretat">Falaises d'Étretat (Normandie)</option>
-                        <option value="bavella">Aiguilles de Bavella (Corse)</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- 2. PARAMÈTRES VECTORIELS (ISOCONTOURS RÉELS) -->
-            <div id="section-vector-settings" class="config-section">
-                <div class="section-title">
-                    <span>Moteur d'Isocontours</span>
-                    <span class="form-label-tag">MNT 3D Réel</span>
-                </div>
-
-                <!-- Pas des courbes -->
-                <div class="form-group">
-                    <label class="form-label" for="select-contour-interval">
-                        <span>Équidistance des courbes (Pas)</span>
-                        <span id="contour-interval-label" style="color:var(--brand-emerald); font-weight:700;">50 mètres</span>
-                    </label>
-                    <select id="select-contour-interval" class="select-control">
-                        <option value="10">10 mètres (Extrêmement dense)</option>
-                        <option value="20">20 mètres (Très dense - Alpin)</option>
-                        <option value="25">25 mètres (Standard IGN)</option>
-                        <option value="50" selected>50 mètres (Équilibré & Graphique)</option>
-                        <option value="100">100 mètres (Épuré - Affiche Minimaliste)</option>
-                        <option value="150">150 mètres (Grand angle / Aérien)</option>
-                        <option value="200">200 mètres (Grand massif)</option>
-                        <option value="250">250 mètres (Très épuré)</option>
-                        <option value="500">500 mètres (Haute montagne / Continental)</option>
-                    </select>
-                </div>
-
-                <!-- Curseur de Lissage Progressif (0 à 6) -->
-                <div class="form-group">
-                    <div class="form-label">
-                        <span>Lissage & Fluidité des courbes</span>
-                        <span id="smoothing-level-label" class="form-label-tag">Niveau 3 — Fluide & Naturel</span>
-                    </div>
-                    <div class="slider-container">
-                        <input type="range" id="input-smoothing" min="0" max="6" value="3" step="1" class="slider-control">
-                        <div class="slider-marks">
-                            <span>0 (Brut)</span>
-                            <span>1</span>
-                            <span>2</span>
-                            <span>3 (Art)</span>
-                            <span>4</span>
-                            <span>5</span>
-                            <span>6 (Liquide)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Filtre de Bruit / Micro-points -->
-                <div class="form-group">
-                    <label class="toggle-item" style="padding: 2px 0;">
-                        <div>
-                            <span>Filtrer micro-points & bruit</span>
-                            <div style="font-size:10px; color:var(--text-muted); font-weight:400;">Élimine les petits points isolés et anomalies du relief</div>
-                        </div>
-                        <input type="checkbox" id="toggle-filter-noise" checked>
-                        <div class="toggle-switch"></div>
-                    </label>
-                </div>
-            </div>
-
-            <!-- CONTENU DALLES RASTER (IGN / OPENTOPO) -->
-            <div id="section-raster-settings" class="config-section" style="display:none;">
-                <div class="section-title">
-                    <span>Flux Cartographique Raster</span>
-                    <span class="form-label-tag">CORS OK</span>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="tile-layer-select">Source des tuiles</label>
-                    <select id="tile-layer-select" class="select-control">
-                        <option value="openTopo">OpenTopoMap (Courbes & Relief)</option>
-                        <option value="ignPlan">IGN — Plan IGN V2 (Standard)</option>
-                        <option value="ignOrtho">IGN — Photographies Aériennes (Ortho)</option>
-                        <option value="ignSlopes">IGN — Pentes & Relief Montagne</option>
-                        <option value="osm">OpenStreetMap Standard</option>
-                        <option value="cartoDark">CARTO — Dark Matter (Monochrome)</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- 3. STYLE DE MISE EN PAGE DU TEXTE (AFFICHE vs MINIMAL ÉDITORIAL vs PUR) -->
-            <div class="config-section">
-                <div class="section-title">
-                    <span>Habillage & Disposition du Texte</span>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
-                </div>
-
-                <div class="text-mode-grid">
-                    <div class="text-mode-btn active" data-text-mode="poster">
-                        <span class="text-mode-icon">🖼️</span>
-                        <span class="text-mode-title">Affiche d'Art</span>
-                        <span class="text-mode-desc">Cartouche & Cadre</span>
-                    </div>
-                    <div class="text-mode-btn" data-text-mode="minimal">
-                        <span class="text-mode-icon">✍️</span>
-                        <span class="text-mode-title">Minimal Édito</span>
-                        <span class="text-mode-desc">Lignes + GPS bas</span>
-                    </div>
-                    <div class="text-mode-btn" data-text-mode="pure">
-                        <span class="text-mode-icon">〰️</span>
-                        <span class="text-mode-title">Lignes Pures</span>
-                        <span class="text-mode-desc">Aucun texte</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. Textes & Typographie (Masqué si mode Lignes Pures) -->
-            <div class="config-section" id="section-text-customization">
-                <div class="section-title">
-                    <span>Textes Personnalisés</span>
-                    <button class="btn-mini-sync" id="btn-sync-coords" title="Insérer automatiquement les coordonnées GPS du centre">GPS Auto</button>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="input-title">Titre Principal</label>
-                    <input type="text" id="input-title" class="input-text" value="MASSIF DU VERCORS" placeholder="Ex. BACK TO THE NATURE">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="input-subtitle">Sous-titre / Coordonnées</label>
-                    <input type="text" id="input-subtitle" class="input-text" value="45.034° N, 5.512° E — ALPES FRANÇAISES" placeholder="Ex. 45.034° N, 5.512° E - France">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="select-font">Police de Caractères</label>
-                    <select id="select-font" class="select-control">
-                        <option value="Montserrat" selected>Montserrat (Moderne & Majestueux)</option>
-                        <option value="Inter">Inter (Épuré & Précision Suisse)</option>
-                        <option value="Cinzel">Cinzel (Art Déco / Gravure Classique)</option>
-                        <option value="Playfair Display">Playfair Display (Serif Éditorial & Luxe)</option>
-                        <option value="Space Grotesk">Space Grotesk (Technique & Contemporain)</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- 5. Sommets, Toponymie & Calques Détaillés -->
-            <div class="config-section">
-                <div class="section-title">
-                    <span>Calques & Éléments Cartographiques</span>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                </div>
-
-                <div class="toggles-list">
-                    <label class="toggle-item">
-                        <span>Courbes de niveau principales</span>
-                        <input type="checkbox" id="toggle-contours" checked>
-                        <div class="toggle-switch"></div>
-                    </label>
-
-                    <label class="toggle-item">
-                        <span>Lignes maîtresses renforcées (×5)</span>
-                        <input type="checkbox" id="toggle-major-contours" checked>
-                        <div class="toggle-switch"></div>
-                    </label>
-
-                    <!-- NOUVEAUTÉ : Noms des Sommets & Altitudes -->
-                    <label class="toggle-item">
-                        <div>
-                            <span>Sommets & Pics réels (▲)</span>
-                            <div style="font-size:9.5px; color:var(--text-muted);">Recherche toponymique (vrais noms : Mont Aiguille, Grand Veymont...)</div>
-                        </div>
-                        <input type="checkbox" id="toggle-peaks" checked>
-                        <div class="toggle-switch"></div>
-                    </label>
-
-                    <!-- Côtes d'altitude sur les courbes maîtresses -->
-                    <label class="toggle-item">
-                        <div>
-                            <span>Graduations d'altitude sur les lignes</span>
-                            <div style="font-size:9.5px; color:var(--text-muted);">Indique l'altitude orientée le long des courbes maîtresses</div>
-                        </div>
-                        <input type="checkbox" id="toggle-contour-labels" checked>
-                        <div class="toggle-switch"></div>
-                    </label>
-
-                    <label class="toggle-item">
-                        <span>Ombrage de relief 3D (Hillshade)</span>
-                        <input type="checkbox" id="toggle-hillshade" checked>
-                        <div class="toggle-switch"></div>
-                    </label>
-
-                    <label class="toggle-item">
-                        <div>
-                            <span>Villes & Communes (Typo Studio)</span>
-                            <div style="font-size:9.5px; color:var(--text-muted);">Uniquement les villes et villages, sans parcs ni tracés parasites</div>
-                        </div>
-                        <input type="checkbox" id="toggle-labels">
-                        <div class="toggle-switch"></div>
-                    </label>
-
-                    <label class="toggle-item">
-                        <span>Échelle & Flèche du Nord</span>
-                        <input type="checkbox" id="toggle-scale-north" checked>
-                        <div class="toggle-switch"></div>
-                    </label>
-                </div>
-            </div>
-
-            <!-- 6. Thème Artistique & Palette -->
-            <div class="config-section">
-                <div class="section-title">
-                    <span>Palette de Couleurs de l'Affiche</span>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                </div>
-
-                <div class="themes-grid">
-                    <div class="theme-card active" data-theme="emerald">
-                        <div class="theme-swatch" style="background: #14382c;"></div>
-                        <span class="theme-name">Émeraude & Blanc</span>
-                    </div>
-                    <div class="theme-card" data-theme="dark">
-                        <div class="theme-swatch" style="background: #0f172a;"></div>
-                        <span class="theme-name">Ardoise & Blanc</span>
-                    </div>
-                    <div class="theme-card" data-theme="blueprint">
-                        <div class="theme-swatch" style="background: #0d223a;"></div>
-                        <span class="theme-name">Blueprint Cyan</span>
-                    </div>
-                    <div class="theme-card" data-theme="sepia">
-                        <div class="theme-swatch" style="background: #f5eedc;"></div>
-                        <span class="theme-name">Sépia Parchemin</span>
-                    </div>
-                    <div class="theme-card" data-theme="gold">
-                        <div class="theme-swatch" style="background: #18181b;"></div>
-                        <span class="theme-name">Noir & Or</span>
-                    </div>
-                    <div class="theme-card" data-theme="transparent">
-                        <div class="theme-swatch" style="background: repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 50% / 8px 8px;"></div>
-                        <span class="theme-name">Fond Transparent</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 7. Format d'Affiche -->
-            <div class="config-section">
-                <div class="section-title">
-                    <span>Format d'Affiche</span>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
-                </div>
-                
-                <div class="format-grid">
-                    <button class="format-btn active" data-format="a4-portrait">
-                        <span class="format-icon-shape shape-portrait"></span>
-                        <span>A4 Portrait</span>
+                <!-- Onglets de Mode Principal -->
+                <div class="mode-nav-tabs">
+                    <button class="mode-tab-btn active" id="tab-btn-vector" data-mode="vector">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                        <span>1. Courbes Topo (DEM)</span>
                     </button>
-                    <button class="format-btn" data-format="a4-landscape">
-                        <span class="format-icon-shape shape-landscape"></span>
-                        <span>A4 Paysage</span>
-                    </button>
-                    <button class="format-btn" data-format="square">
-                        <span class="format-icon-shape shape-square"></span>
-                        <span>Carré (1:1)</span>
-                    </button>
-                    <button class="format-btn" data-format="panorama">
-                        <span class="format-icon-shape shape-panorama"></span>
-                        <span>Panorama</span>
+                    <button class="mode-tab-btn" id="tab-btn-raster" data-mode="raster">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                        <span>2. Dalles Raster IGN</span>
                     </button>
                 </div>
             </div>
 
-            <!-- 8. Résolution d'Exportation -->
-            <div class="config-section">
-                <div class="section-title">
-                    <span>Résolution & Densité</span>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            <div class="sidebar-content">
+                <!-- 1. Recherche & Lieux Remarquables -->
+                <div class="config-section">
+                    <div class="section-title">
+                        <span>Recherche & Lieux Notables</span>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="search-box">
+                            <input type="text" id="input-search" class="input-text" placeholder="Rechercher (ex: Chamonix, Vercors, Gavarnie...)">
+                            <button class="btn-search" id="btn-search" title="Lancer la recherche">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <select id="preset-places-select" class="select-control">
+                            <option value="">— Accès rapide spots remarquables —</option>
+                            <option value="vercors" selected>Massif du Vercors (Isère)</option>
+                            <option value="chamonix">Mont Blanc / Chamonix</option>
+                            <option value="gavarnie">Cirque de Gavarnie (Pyrénées)</option>
+                            <option value="calanques">Calanques de Marseille</option>
+                            <option value="verdon">Gorges du Verdon</option>
+                            <option value="puydedome">Puy de Dôme (Volcans d'Auvergne)</option>
+                            <option value="etretat">Falaises d'Étretat (Normandie)</option>
+                            <option value="bavella">Aiguilles de Bavella (Corse)</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="res-grid">
-                    <div class="res-card" data-res="sd">
-                        <span class="res-card-title">150 DPI Standard</span>
-                        <span class="res-card-desc">Aperçu Web (~4 Mpx)</span>
+                <!-- 2. PARAMÈTRES VECTORIELS (ISOCONTOURS RÉELS) -->
+                <div id="section-vector-settings" class="config-section">
+                    <div class="section-title">
+                        <span>Moteur d'Isocontours</span>
+                        <span class="form-label-tag">MNT 3D Réel</span>
                     </div>
-                    <div class="res-card active" data-res="hd">
-                        <span class="res-card-title">300 DPI Pro</span>
-                        <span class="res-card-desc">Impression A4 (~9 Mpx)</span>
+
+                    <!-- Pas des courbes -->
+                    <div class="form-group">
+                        <label class="form-label" for="select-contour-interval">
+                            <span>Équidistance des courbes (Pas)</span>
+                            <span id="contour-interval-label" style="color:var(--text-accent); font-weight:700;">50 mètres</span>
+                        </label>
+                        <select id="select-contour-interval" class="select-control">
+                            <option value="10">10 mètres (Extrêmement dense)</option>
+                            <option value="20">20 mètres (Très dense - Alpin)</option>
+                            <option value="25">25 mètres (Standard IGN)</option>
+                            <option value="50" selected>50 mètres (Équilibré & Graphique)</option>
+                            <option value="100">100 mètres (Épuré - Affiche Minimaliste)</option>
+                            <option value="150">150 mètres (Grand angle / Aérien)</option>
+                            <option value="200">200 mètres (Grand massif)</option>
+                            <option value="250">250 mètres (Très épuré)</option>
+                            <option value="500">500 mètres (Haute montagne / Continental)</option>
+                        </select>
                     </div>
-                    <div class="res-card" data-res="4k">
-                        <span class="res-card-title">4K Ultra HD</span>
-                        <span class="res-card-desc">Grand Format (~16 Mpx)</span>
+
+                    <!-- Curseur de Lissage Progressif (0 à 8) -->
+                    <div class="form-group">
+                        <div class="form-label">
+                            <span>Lissage & Arrondi des courbes</span>
+                            <span id="smoothing-level-label" class="form-label-tag">Niveau 3 — Fluide & Naturel</span>
+                        </div>
+                        <div class="slider-container">
+                            <input type="range" id="input-smoothing" min="0" max="8" value="3" step="1" class="slider-control">
+                            <div class="slider-marks">
+                                <span>0 (Brut)</span>
+                                <span>2</span>
+                                <span>4 (Lisse)</span>
+                                <span>6 (Liquide)</span>
+                                <span>8 (Ultra)</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="res-card" data-res="50mp">
-                        <span class="res-card-title" style="color:var(--brand-emerald);">50 Mégapixels ⚡</span>
-                        <span class="res-card-desc">Galerie Musée (~50 Mpx)</span>
+
+                    <!-- Curseur Filtre de Bruit & Micro-points -->
+                    <div class="form-group">
+                        <div class="form-label">
+                            <span>Filtrage des micro-points résiduels</span>
+                            <span id="noise-threshold-label" class="form-label-tag">Modéré (8 px)</span>
+                        </div>
+                        <div class="slider-container">
+                            <input type="range" id="input-noise-threshold" min="0" max="40" value="8" step="1" class="slider-control">
+                            <div class="slider-marks">
+                                <span>0 (Tout)</span>
+                                <span>10</span>
+                                <span>20 (Net)</span>
+                                <span>30</span>
+                                <span>40 (Max)</span>
+                            </div>
+                        </div>
+                        <div class="form-hint-subtle">Augmentez pour supprimer tous les points et petits îlots isolés restants.</div>
+                    </div>
+
+                    <!-- Fréquence des courbes maîtresses -->
+                    <div class="form-group">
+                        <label class="form-label" for="select-major-frequency">
+                            <span>Fréquence des maîtresses (Gras)</span>
+                            <span id="major-frequency-label" style="color:var(--text-accent); font-weight:700;">×4 (1 sur 4)</span>
+                        </label>
+                        <select id="select-major-frequency" class="select-control">
+                            <option value="2">Une courbe sur 2 (×2 dense)</option>
+                            <option value="3">Une courbe sur 3 (×3)</option>
+                            <option value="4" selected>Une courbe sur 4 (×4 équilibré)</option>
+                            <option value="5">Une courbe sur 5 (×5 standard)</option>
+                            <option value="10">Une courbe sur 10 (×10 aéré)</option>
+                            <option value="1">Toutes les courbes (×1 gras)</option>
+                            <option value="0">Aucune maîtresse (Toutes fines)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- CONTENU DALLES RASTER (IGN / OPENTOPO) -->
+                <div id="section-raster-settings" class="config-section" style="display:none;">
+                    <div class="section-title">
+                        <span>Flux Cartographique Raster</span>
+                        <span class="form-label-tag">CORS OK</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="tile-layer-select">Source des tuiles</label>
+                        <select id="tile-layer-select" class="select-control">
+                            <option value="openTopo">OpenTopoMap (Randonnée, Courbes & Relief)</option>
+                            <option value="ignTop25">IGN — Cartes Rando Topo (TOP 25 / SCAN 25)</option>
+                            <option value="ignPlan">IGN — Plan IGN V2 (Sentiers balisés)</option>
+                            <option value="ignOrtho">IGN — Photographies Aériennes (Ortho)</option>
+                            <option value="ignSlopes">IGN — Pentes & Relief Montagne</option>
+                            <option value="osm">OpenStreetMap Standard</option>
+                            <option value="cartoDark">CARTO — Dark Matter (Monochrome)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label class="toggle-item">
+                            <span>Faire ressortir les sentiers de randonnée</span>
+                            <input type="checkbox" id="check-highlight-trails" checked>
+                            <div class="toggle-switch"></div>
+                        </label>
+                        <div class="form-hint-subtle">Améliore le contraste et superpose les tracés balisés GR et sentiers de montagne.</div>
+                    </div>
+                </div>
+
+                <!-- 3. Format de Prise & Cadre d'Affiche (avec Custom) -->
+                <div class="config-section">
+                    <div class="section-title">
+                        <span>Format de Cadre & Prise de Vue</span>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                    </div>
+                    
+                    <div class="format-grid">
+                        <button class="format-btn active" data-format="a4-portrait">
+                            <span class="format-icon-shape shape-portrait"></span>
+                            <span>A4 Portrait</span>
+                        </button>
+                        <button class="format-btn" data-format="a4-landscape">
+                            <span class="format-icon-shape shape-landscape"></span>
+                            <span>A4 Paysage</span>
+                        </button>
+                        <button class="format-btn" data-format="square">
+                            <span class="format-icon-shape shape-square"></span>
+                            <span>Carré (1:1)</span>
+                        </button>
+                        <button class="format-btn" data-format="panorama">
+                            <span class="format-icon-shape shape-panorama"></span>
+                            <span>Panorama</span>
+                        </button>
+                        <button class="format-btn" data-format="custom">
+                            <span class="format-icon-shape shape-custom"></span>
+                            <span>Personnalise</span>
+                        </button>
+                    </div>
+
+                    <!-- Panneau de format custom interactif -->
+                    <div id="custom-format-panel" class="custom-format-box" style="display:none;">
+                        <div class="custom-format-inputs-row">
+                            <div class="custom-field">
+                                <label for="input-custom-w">Largeur</label>
+                                <input type="number" id="input-custom-w" value="50" min="5" max="500" step="1">
+                            </div>
+                            <span class="custom-format-sep">×</span>
+                            <div class="custom-field">
+                                <label for="input-custom-h">Hauteur</label>
+                                <input type="number" id="input-custom-h" value="70" min="5" max="500" step="1">
+                            </div>
+                            <div class="custom-field custom-unit-field">
+                                <label for="select-custom-unit">Unité</label>
+                                <select id="select-custom-unit">
+                                    <option value="cm" selected>cm</option>
+                                    <option value="ratio">ratio</option>
+                                    <option value="px">px</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="custom-presets-pills">
+                            <span class="presets-label">Raccourcis :</span>
+                            <button type="button" class="pill-btn" data-cw="50" data-ch="70">50×70 cm</button>
+                            <button type="button" class="pill-btn" data-cw="40" data-ch="50">40×50 cm</button>
+                            <button type="button" class="pill-btn" data-cw="30" data-ch="40">30×40 cm</button>
+                            <button type="button" class="pill-btn" data-cw="16" data-ch="9">16:9</button>
+                            <button type="button" class="pill-btn" data-cw="4" data-ch="5">4:5</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Textes & Titre Rapide -->
+                <div class="config-section" id="section-text-customization">
+                    <div class="section-title">
+                        <span>Titrage du Poster</span>
+                        <button class="btn-mini-sync" id="btn-sync-coords" title="Insérer automatiquement les coordonnées GPS du centre">GPS Auto</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="input-title">Titre Principal</label>
+                        <input type="text" id="input-title" class="input-text" value="MASSIF DU VERCORS" placeholder="Ex. MASSIF DU VERCORS">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="input-subtitle">Sous-titre / Coordonnées</label>
+                        <input type="text" id="input-subtitle" class="input-text" value="45.034° N, 5.512° E — ALPES FRANÇAISES" placeholder="Ex. 45.034° N, 5.512° E - France">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="select-font">Police de Caractères</label>
+                        <select id="select-font" class="select-control">
+                            <option value="Montserrat" selected>Montserrat (Moderne & Majestueux)</option>
+                            <option value="Inter">Inter (Épuré & Précision Suisse)</option>
+                            <option value="Syne">Syne (Design Avant-Garde)</option>
+                            <option value="Plus Jakarta Sans">Plus Jakarta Sans (Tech Minimaliste)</option>
+                            <option value="Cormorant Garamond">Cormorant Garamond (Luxe & Carto Fine)</option>
+                            <option value="Playfair Display">Playfair Display (Serif Éditorial)</option>
+                            <option value="Bodoni Moda">Bodoni Moda (Haute Couture Italien)</option>
+                            <option value="Cinzel">Cinzel (Gravure Impériale)</option>
+                            <option value="Marcellus">Marcellus (Sérénité Classique)</option>
+                            <option value="Space Grotesk">Space Grotesk (Technique & Géométrique)</option>
+                            <option value="Oswald">Oswald (Architectural Uppercase)</option>
+                            <option value="DM Mono">DM Mono (Cartographie Pure / Code)</option>
+                        </select>
                     </div>
                 </div>
             </div>
+
+            <!-- Pied de Sidebar Carte : Bouton de Compilation vers la Page Studio -->
+            <div class="sidebar-footer">
+                <button class="btn-compile-primary" id="btn-compile-and-customize">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    <span>Compiler les lignes & Personnaliser</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Badge BBox en bas à droite -->
+        <div id="bbox-badge">
+            <span>Zone :</span>
+            <span id="bbox-values">N: 45.2100° | S: 44.8500° | O: 5.3000° | E: 5.7200°</span>
         </div>
+    </div>
 
-        <!-- Pied de Sidebar : Actions d'Exportation Multiples (PNG, SVG, PDF) -->
-        <div class="sidebar-footer">
-            <button class="btn-export-primary" id="btn-export-png">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span id="btn-main-label">Générer & Télécharger (PNG HD)</span>
-            </button>
 
-            <div class="export-actions-row">
-                <button class="btn-export-secondary" id="btn-export-svg" title="Fichier vectoriel SVG infini pour Illustrator, Laser ou Plotter">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+    <!-- =====================================================================
+         VUE 2 : PAGE STUDIO DE PERSONNALISATION & EXPORT
+         ===================================================================== -->
+    <div id="view-studio" class="screen-view studio-screen" style="display: none;">
+        <!-- Studio Header -->
+        <header class="studio-header">
+            <div class="studio-header-left">
+                <button id="btn-studio-back" class="btn-studio-nav" title="Retourner à la carte pour ajuster le cadrage ou recompiler">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg>
+                    <span>← Modifier le cadrage (Carte)</span>
+                </button>
+                <div class="studio-brand-inline">
+                    <span class="studio-logo-name">topolines.tech</span>
+                    <span class="studio-tag-step">Studio de Création Haute Définition</span>
+                </div>
+            </div>
+
+            <div class="studio-header-right">
+                <button class="btn-header-export" id="studio-export-png-btn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Télécharger PNG</span>
+                </button>
+                <button class="btn-header-export btn-outline" id="studio-export-svg-btn" title="Télécharger le fichier vectoriel SVG pur">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                     <span>SVG Vectoriel</span>
                 </button>
-                <button class="btn-export-secondary" id="btn-export-pdf" title="Document PDF d'impression haute qualité">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <button class="btn-header-export btn-outline" id="studio-export-pdf-btn" title="Télécharger le document PDF haute résolution">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                     <span>PDF Print</span>
                 </button>
             </div>
-        </div>
-    </aside>
+        </header>
 
-    <!-- Badge BBox en bas à droite -->
-    <div id="bbox-badge">
-        <span>Zone :</span>
-        <span id="bbox-values">N: 45.2100° | S: 44.8500° | O: 5.3000° | E: 5.7200°</span>
+        <!-- Studio Body -->
+        <div class="studio-body">
+            <!-- Viewport Preview Central -->
+            <main class="studio-viewport">
+                <div class="studio-canvas-stage" id="studio-stage">
+                    <div class="studio-canvas-wrapper" id="studio-canvas-wrapper">
+                        <canvas id="studio-live-canvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Toolbar de Zoom sous l'aperçu -->
+                <div class="studio-zoom-bar">
+                    <button id="btn-zoom-out" title="Dézoomer">−</button>
+                    <span id="zoom-level-text">Ajusté</span>
+                    <button id="btn-zoom-in" title="Zoomer">+</button>
+                    <div class="zoom-divider"></div>
+                    <button id="btn-zoom-fit" class="btn-zoom-pill active">Ajuster</button>
+                    <button id="btn-zoom-100" class="btn-zoom-pill">100%</button>
+                </div>
+            </main>
+
+            <!-- Sidebar Studio de Personnalisation -->
+            <aside class="studio-sidebar">
+                <div class="studio-sidebar-scroll">
+
+                    <!-- 1. Palettes Thématiques Préréglées (1 clic) -->
+                    <div class="studio-group">
+                        <div class="studio-group-title">
+                            <span>Palettes Express</span>
+                            <span class="studio-group-tag">1 Clic</span>
+                        </div>
+                        <div class="studio-presets-row">
+                            <button class="palette-chip active" data-palette="emerald" title="Émeraude & Blanc">
+                                <span class="chip-swatch" style="background:#14382c;"></span>
+                                <span>Émeraude</span>
+                            </button>
+                            <button class="palette-chip" data-palette="dark" title="Ardoise & Blanc">
+                                <span class="chip-swatch" style="background:#0f172a;"></span>
+                                <span>Ardoise</span>
+                            </button>
+                            <button class="palette-chip" data-palette="blueprint" title="Blueprint Cyan">
+                                <span class="chip-swatch" style="background:#0d223a;"></span>
+                                <span>Blueprint</span>
+                            </button>
+                            <button class="palette-chip" data-palette="sepia" title="Sépia Parchemin">
+                                <span class="chip-swatch" style="background:#f5eedc; border:1px solid #d4c8b0;"></span>
+                                <span>Sépia</span>
+                            </button>
+                            <button class="palette-chip" data-palette="gold" title="Noir & Or Champagne">
+                                <span class="chip-swatch" style="background:#18181b;"></span>
+                                <span>Noir & Or</span>
+                            </button>
+                            <button class="palette-chip" data-palette="mono-light" title="Blanc Minimal contemporain">
+                                <span class="chip-swatch" style="background:#ffffff; border:1px solid #cbd5e1;"></span>
+                                <span>Minimal</span>
+                            </button>
+                            <button class="palette-chip" data-palette="transparent" title="Fond Transparent pour intégration web">
+                                <span class="chip-swatch" style="background: repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 50% / 6px 6px;"></span>
+                                <span>Alpha</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 2. Personnalisation Précise des Couleurs -->
+                    <div class="studio-group">
+                        <div class="studio-group-title">
+                            <span>Couleurs Directes</span>
+                            <span class="studio-group-tag">Personnalisé</span>
+                        </div>
+
+                        <!-- Fond 1 : Fond global de l'affiche (bords, cartouche, texte) -->
+                        <div class="color-picker-row">
+                            <div class="color-label-with-link">
+                                <label for="color-bg">Fond de l'affiche</label>
+                                <span class="color-role-tag">Bords & Cartouche</span>
+                            </div>
+                            <div class="color-picker-input-group">
+                                <label class="color-transparent-toggle" title="Fond transparent pour PNG / SVG">
+                                    <input type="checkbox" id="check-bg-transparent">
+                                    <span>Alpha</span>
+                                </label>
+                                <input type="color" id="color-bg" value="#14382c">
+                                <input type="text" id="hex-bg" value="#14382c" class="input-hex" maxlength="7">
+                            </div>
+                        </div>
+
+                        <!-- Bouton Lier / Dissocier les deux fonds -->
+                        <div class="link-bgs-container">
+                            <button type="button" id="btn-toggle-link-bgs" class="btn-link-bgs active" title="Cliquer pour séparer ou lier les couleurs de fond">
+                                <span id="label-link-bgs">Fonds liés (identiques)</span>
+                            </button>
+                        </div>
+
+                        <!-- Fond 2 : Fond de la carte (zone sous les courbes de niveau) -->
+                        <div class="color-picker-row" id="row-map-bg">
+                            <div class="color-label-with-link">
+                                <label for="color-map-bg">Fond des lignes</label>
+                                <span class="color-role-tag">Zone carte topo</span>
+                            </div>
+                            <div class="color-picker-input-group">
+                                <label class="color-transparent-toggle" title="Fond transparent pour la zone carte">
+                                    <input type="checkbox" id="check-map-bg-transparent">
+                                    <span>Alpha</span>
+                                </label>
+                                <input type="color" id="color-map-bg" value="#14382c">
+                                <input type="text" id="hex-map-bg" value="#14382c" class="input-hex" maxlength="7">
+                            </div>
+                        </div>
+
+                        <!-- Lignes maîtresses -->
+                        <div class="color-picker-row">
+                            <label for="color-major">Lignes maîtresses</label>
+                            <div class="color-picker-input-group">
+                                <input type="color" id="color-major" value="#ffffff">
+                                <input type="text" id="hex-major" value="#ffffff" class="input-hex" maxlength="7">
+                            </div>
+                        </div>
+                        <div class="stroke-slider-row">
+                            <span>Épaisseur trait maître</span>
+                            <input type="range" id="input-stroke-major" min="0.5" max="4.0" step="0.1" value="1.8">
+                            <span id="label-stroke-major">1.8px</span>
+                        </div>
+
+                        <!-- Lignes secondaires -->
+                        <div class="color-picker-row">
+                            <label for="color-minor">Lignes secondaires</label>
+                            <div class="color-picker-input-group">
+                                <input type="color" id="color-minor" value="#a7f3d0">
+                                <input type="text" id="hex-minor" value="#a7f3d0" class="input-hex" maxlength="7">
+                            </div>
+                        </div>
+                        <div class="stroke-slider-row">
+                            <span>Épaisseur trait secondaire</span>
+                            <input type="range" id="input-stroke-minor" min="0.2" max="2.5" step="0.1" value="0.9">
+                            <span id="label-stroke-minor">0.9px</span>
+                        </div>
+
+                        <!-- Villes & communes -->
+                        <div class="color-picker-row">
+                            <label for="color-cities">Noms des villes</label>
+                            <div class="color-picker-input-group">
+                                <input type="color" id="color-cities" value="#ffffff">
+                                <input type="text" id="hex-cities" value="#ffffff" class="input-hex" maxlength="7">
+                            </div>
+                        </div>
+
+                        <!-- Sommets ▲ -->
+                        <div class="color-picker-row">
+                            <label for="color-peaks">Sommets & Pics (▲)</label>
+                            <div class="color-picker-input-group">
+                                <input type="color" id="color-peaks" value="#ffffff">
+                                <input type="text" id="hex-peaks" value="#ffffff" class="input-hex" maxlength="7">
+                            </div>
+                        </div>
+
+                        <!-- Textes & cartouche -->
+                        <div class="color-picker-row">
+                            <label for="color-text">Titres & Cartouche</label>
+                            <div class="color-picker-input-group">
+                                <input type="color" id="color-text" value="#ffffff">
+                                <input type="text" id="hex-text" value="#ffffff" class="input-hex" maxlength="7">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Typographie & Titrage -->
+                    <div class="studio-group">
+                        <div class="studio-group-title">
+                            <span>Typographie & Textes</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="studio-select-font">Police de Caractères</label>
+                            <select id="studio-select-font" class="select-control font-select-styled">
+                                <option value="Montserrat" selected>Montserrat (Moderne & Majestueux)</option>
+                                <option value="Inter">Inter (Épuré & Précision Suisse)</option>
+                                <option value="Syne">Syne (Design Avant-Garde)</option>
+                                <option value="Plus Jakarta Sans">Plus Jakarta Sans (Tech Minimaliste)</option>
+                                <option value="Cormorant Garamond">Cormorant Garamond (Luxe & Carto Fine)</option>
+                                <option value="Playfair Display">Playfair Display (Serif Éditorial)</option>
+                                <option value="Bodoni Moda">Bodoni Moda (Haute Couture Italien)</option>
+                                <option value="Cinzel">Cinzel (Gravure Impériale)</option>
+                                <option value="Marcellus">Marcellus (Sérénité Classique)</option>
+                                <option value="Space Grotesk">Space Grotesk (Technique & Géométrique)</option>
+                                <option value="Oswald">Oswald (Architectural Uppercase)</option>
+                                <option value="DM Mono">DM Mono (Cartographie Pure / Code)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="studio-input-title">Titre Principal</label>
+                            <input type="text" id="studio-input-title" class="input-text" value="MASSIF DU VERCORS">
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-label-row">
+                                <label class="form-label" for="studio-input-subtitle">Sous-titre / Coordonnées</label>
+                                <button class="btn-text-action" id="studio-btn-gps-auto">GPS Auto</button>
+                            </div>
+                            <input type="text" id="studio-input-subtitle" class="input-text" value="45.034° N, 5.512° E — ALPES FRANÇAISES">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Disposition du Texte</label>
+                            <div class="text-mode-grid">
+                                <div class="text-mode-btn active" data-studio-layout="poster">
+                                    <span class="text-mode-title">Affiche d'Art</span>
+                                    <span class="text-mode-desc">Cadre & Marges</span>
+                                </div>
+                                <div class="text-mode-btn" data-studio-layout="poster-fullbleed">
+                                    <span class="text-mode-title">Plein Bord</span>
+                                    <span class="text-mode-desc">100% sans marge</span>
+                                </div>
+                                <div class="text-mode-btn" data-studio-layout="minimal">
+                                    <span class="text-mode-title">Minimal Édito</span>
+                                    <span class="text-mode-desc">Plein écran discret</span>
+                                </div>
+                                <div class="text-mode-btn" data-studio-layout="pure">
+                                    <span class="text-mode-title">Lignes Pures</span>
+                                    <span class="text-mode-desc">Sans aucun texte</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Calques Affichables en Direct -->
+                    <div class="studio-group">
+                        <div class="studio-group-title">
+                            <span>Calques Actifs</span>
+                        </div>
+
+                        <div class="toggles-list">
+                            <label class="toggle-item">
+                                <span>Courbes maîtresses (Gras)</span>
+                                <input type="checkbox" id="studio-toggle-major" checked>
+                                <div class="toggle-switch"></div>
+                            </label>
+                            <div class="sub-toggle-option" id="studio-major-freq-row">
+                                <div class="form-label-row" style="margin-bottom: 4px;">
+                                    <label class="form-label" for="studio-select-major-frequency" style="font-size:11px; margin:0;">Fréquence du trait gras</label>
+                                    <span id="studio-major-freq-badge" class="form-label-tag">×4</span>
+                                </div>
+                                <select id="studio-select-major-frequency" class="select-control select-control-sm">
+                                    <option value="2">Une sur 2 (×2 dense)</option>
+                                    <option value="3">Une sur 3 (×3)</option>
+                                    <option value="4" selected>Une sur 4 (×4 équilibré)</option>
+                                    <option value="5">Une sur 5 (×5 standard)</option>
+                                    <option value="10">Une sur 10 (×10 aéré)</option>
+                                    <option value="1">Toutes les courbes (×1)</option>
+                                    <option value="0">Toutes fines (aucune maîtresse)</option>
+                                </select>
+                            </div>
+                            <label class="toggle-item">
+                                <span>Courbes secondaires</span>
+                                <input type="checkbox" id="studio-toggle-minor" checked>
+                                <div class="toggle-switch"></div>
+                            </label>
+                            <label class="toggle-item">
+                                <span>Graduations d'altitudes sur les lignes</span>
+                                <input type="checkbox" id="studio-toggle-contour-labels">
+                                <div class="toggle-switch"></div>
+                            </label>
+                            <label class="toggle-item">
+                                <span>Sommets & Pics réels (▲)</span>
+                                <input type="checkbox" id="studio-toggle-peaks" checked>
+                                <div class="toggle-switch"></div>
+                            </label>
+                            <label class="toggle-item">
+                                <span>Villes & Communes (Studio)</span>
+                                <input type="checkbox" id="studio-toggle-cities" checked>
+                                <div class="toggle-switch"></div>
+                            </label>
+                            <label class="toggle-item">
+                                <span>Ombrage 3D du relief (Hillshade)</span>
+                                <input type="checkbox" id="studio-toggle-hillshade">
+                                <div class="toggle-switch"></div>
+                            </label>
+                            <label class="toggle-item">
+                                <span>Échelle & Flèche Nord</span>
+                                <input type="checkbox" id="studio-toggle-scale" checked>
+                                <div class="toggle-switch"></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 5. Résolution & Téléchargements Finaux -->
+                    <div class="studio-group">
+                        <div class="studio-group-title">
+                            <span>Exportation & Résolution Finale</span>
+                        </div>
+
+                        <div class="res-grid" id="studio-res-grid">
+                            <div class="res-card" data-studio-res="sd">
+                                <span class="res-card-title">150 DPI Standard</span>
+                                <span class="res-card-desc">Web rapide</span>
+                            </div>
+                            <div class="res-card active" data-studio-res="hd">
+                                <span class="res-card-title">300 DPI Pro</span>
+                                <span class="res-card-desc">Impression A4 Print</span>
+                            </div>
+                            <div class="res-card" data-studio-res="4k">
+                                <span class="res-card-title">4K Ultra HD</span>
+                                <span class="res-card-desc">Grand Format</span>
+                            </div>
+                            <div class="res-card" data-studio-res="50mp">
+                                <span class="res-card-title" style="color:var(--text-accent);">50 Mégapixels</span>
+                                <span class="res-card-desc">Qualité Musée</span>
+                            </div>
+                        </div>
+
+                        <button class="btn-final-export btn-export-png-main" id="btn-final-export-png">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            <span>Télécharger l'Affiche (PNG HD)</span>
+                        </button>
+
+                        <div class="export-actions-row">
+                            <button class="btn-final-export-secondary" id="btn-final-export-svg">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                <span>SVG Vectoriel Pur</span>
+                            </button>
+                            <button class="btn-final-export-secondary" id="btn-final-export-pdf">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                <span>Document PDF HD</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </aside>
+        </div>
     </div>
 
-    <!-- Modale de Progression -->
+
+    <!-- =====================================================================
+         MODALES & OVERLAYS COMMONS
+         ===================================================================== -->
+    <!-- Modale de Progression du Calcul -->
     <div id="progress-modal">
         <div class="progress-box">
             <div class="progress-spinner"></div>
@@ -493,7 +780,7 @@
             </div>
 
             <div class="api-info-badge">
-                🔒 <strong>100% Gratuit & Sécurisé :</strong> L'application fonctionne déjà gratuitement sans aucune clé. Ces clés optionnelles permettent de débloquer des couches HD supplémentaires. Elles sont stockées <strong>uniquement dans votre navigateur local</strong> (localStorage) et ne seront jamais envoyées sur GitHub.
+                <strong>100% Gratuit & Sécurisé :</strong> L'application fonctionne déjà gratuitement sans aucune clé. Ces clés optionnelles permettent de débloquer des couches HD supplémentaires. Elles sont stockées <strong>uniquement dans votre navigateur local</strong> (localStorage) et ne seront jamais envoyées sur GitHub.
             </div>
 
             <div class="form-group">
@@ -515,9 +802,17 @@
             <div class="form-group">
                 <label class="form-label" for="api-key-carto">
                     <span>CARTO API Key (Labels sans filigrane)</span>
-                    <a href="https://carto.com/" target="_blank" style="color:var(--text-accent); text-decoration:none; font-size:10px;">Obtenir gratuit ↗</a>
+                    <a href="https://carto.com/" target="_blank" style="color:var(--text-accent); text-decoration:none; font-size:10px;">Obtenir gratuit -></a>
                 </label>
                 <input type="password" id="api-key-carto" class="input-text" placeholder="Clé CARTO...">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="api-key-geoapify">
+                    <span>Geoapify API Key (Places & Sommets)</span>
+                    <a href="https://www.geoapify.com/" target="_blank" style="color:var(--text-accent); text-decoration:none; font-size:10px;">Obtenir gratuit -></a>
+                </label>
+                <input type="password" id="api-key-geoapify" class="input-text" placeholder="Clé Geoapify Places...">
             </div>
 
             <div class="api-modal-footer">
