@@ -1,35 +1,6 @@
-# topolines.tech — Moteur d'Isocontours Vectoriels & Cartographie d'Art
+# topolines.tech — Créateur d'affiches Topographiques personnalisées haute resolution :
 
-Application web monopage 100 % client (HTML5 / CSS3 moderne / JavaScript vanilla) permettant d'explorer une carte, de sélectionner précisément une zone géographique à l'aide d'un cadre de visée interactif et d'en exporter un poster topographique haute résolution :
-- **Architecture en 2 étapes fluides** : Cadrage géographique sur carte Leaflet ➔ Page Studio plein écran de personnalisation en direct (couleurs directes, épaisseurs, calques, typographies) sans recalcul lourd du MNT.
-- **Véritable calcul mathématique des courbes de niveau** (*Marching Squares* sur MNT / DEM mondial).
-- **Curseur de lissage et d'arrondi poussé jusqu'au Niveau 8** (relaxation laplacienne + algorithme de Chaikin pour des vagues et courbes ultra-organiques).
-- **Curseur de filtrage des micro-points résiduels (0 à 40 px)** pour éliminer les moindres artefacts et îlots isolés indésirables.
-- **Format de prise custom / personnalisé** : définition libre de dimensions (ex: 50×70 cm, 40×50 cm, 16:9, 4:5...) adaptant le cadre de visée et les résolutions d'export.
-- **12 Typographies prestigieuses intégrées** : Montserrat, Inter, Syne, Cormorant Garamond, Plus Jakarta Sans, Playfair Display, Bodoni Moda, Cinzel, Marcellus, Space Grotesk, Oswald, DM Mono.
-- **Espacement régulier des lettres corrigé** (notamment pour les "I" et caractères étroits).
-- **Export SVG vectoriel pur corrigé et complet** (courbes maîtresses, courbes secondaires, graduations d'altitude, sommets réels ▲, villes, échelle graphique et flèche du Nord).
-- **Export PNG jusqu'à 50 Mégapixels et PDF Haute Résolution**.
-- **Interface minimaliste, élégante et professionnelle** sans dégradés tape-à-l'œil, avec boutons de couleurs standards et transitions fluides.
-
----
-
-## 🚀 Démarrage Rapide
-
-1. **Option 1 (Le plus simple sous Windows) :**  
-   Double-cliquez sur [`lancer-serveur.bat`](file:///c:/Users/jeanm/Documents/projet%20ign/lancer-serveur.bat).  
-   Il démarre un serveur local HTTP léger sur `http://localhost:8000` et ouvre votre navigateur.
-
-2. **Option 2 (VS Code Live Server) :**  
-   Clic droit sur [`index.html`](file:///c:/Users/jeanm/Documents/projet%20ign/index.html) > **« Open with Live Server »**.
-
-3. **Option 3 (Python, Node ou PHP) :**  
-   - Python : `python -m http.server 8000`
-   - Node : `npx serve`
-
----
-
-## 🌟 Fonctionnalités du Studio
+## Fonctionnalités du Studio
 
 ### 1. Véritable Moteur d'Isocontours Topo (Marching Squares)
 - Télécharge les données d'élévation MNT (Terrain-RGB mondial) via flux ouvert compatible CORS.
@@ -47,7 +18,7 @@ Application web monopage 100 % client (HTML5 / CSS3 moderne / JavaScript vanilla
 
 ---
 
-## 🔑 Clés d'API & Sécurité GitHub
+## Clés d'API & Sécurité GitHub
 
 L'application est conçue pour fonctionner **100 % gratuitement et sans aucune inscription** dès son ouverture :
 - MNT altimétrique mondial : ouvert, gratuit, sans clé.
@@ -55,16 +26,13 @@ L'application est conçue pour fonctionner **100 % gratuitement et sans aucune i
 - Dalles raster : IGN Géoplateforme, OpenTopoMap et OpenStreetMap (libres et ouverts).
 
 ### Si vous souhaitez ajouter vos propres clés d'API gratuites :
-Vous pouvez débloquer des couches HD supplémentaires (Mapbox Satellite, Carto Voyager, Stadia/Stamen) de deux façons **100 % sécurisées pour GitHub** :
+Vous pouvez débloquer des couches HD supplémentaires (Mapbox Satellite, Carto Voyager, Stadia/Stamen) :
 
-1. **Directement dans l'application (Recommandé pour GitHub Pages)** :
-   - Cliquez sur **`⚙️ Clés API`** dans l'en-tête de la barre latérale.
+1. **Directement dans l'application** :
+   - Cliquez sur **`Réglages Clés API`** dans l'en-tête de la barre latérale.
    - Collez vos clés gratuites et cliquez sur « Enregistrer ».
-   - Les clés sont stockées dans le `localStorage` de votre navigateur. **Elles ne sont jamais envoyées sur GitHub.**
+   - Les clés sont stockées dans le `localStorage` de votre navigateur. **Elles ne sont jamais envoyées.**
 
-2. **Via fichier de configuration local (pour développeurs)** :
-   - Copiez [`config.example.js`](file:///c:/Users/jeanm/Documents/projet%20ign/config.example.js) vers `config.js` ou [`.env.example`](file:///c:/Users/jeanm/Documents/projet%20ign/.env.example) vers `.env`.
-   - `config.js` et `.env` sont déjà inscrits dans [`.gitignore`](file:///c:/Users/jeanm/Documents/projet%20ign/.gitignore) : vous pouvez pousser votre dépôt sur GitHub sans aucun risque de fuite de clé !
 
 ### 2. Calques Vectoriels Débrayables
 - [x] **Courbes de niveau principales**
@@ -75,7 +43,7 @@ Vous pouvez débloquer des couches HD supplémentaires (Mapbox Satellite, Carto 
 - [x] **Cartouche d'art, échelle & rose des vents**
 - [x] **Mode « Lignes Topo Pures »** : un simple clic masque instantanément tous les textes, routes et cartouches pour ne conserver que la géométrie pure des courbes !
 
-### 3. Formats d'Exportation Professionnels
+### 3. Formats d'Exportation
 - **Export SVG Vectoriel Pur (.svg)** :
   - Véritable fichier SVG vectoriel avec des balises `<path d="..." />` groupées par calques (`<g id="courbes-maitresses">`, `<g id="courbes-secondaires">`).
   - Résolution infinie, éditable dans Adobe Illustrator, Inkscape, et prêt pour les découpeuses laser ou traceurs CNC.
